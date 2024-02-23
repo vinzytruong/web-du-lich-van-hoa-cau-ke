@@ -17,15 +17,15 @@ export const navigations: NavigationHasChildren[] = [
     children: [
       {
         label: 'Địa điểm du lịch',
-        path: 'sightseeing-sites',
+        path: 'sightseeing',
       },
       {
         label: 'Di tích lịch sử',
-        path: 'historical-sites'
+        path: 'historical'
       },
       {
         label: 'Sản phẩm COOP',
-        path: 'ocop-product'
+        path: 'product'
       }
     ]
   }
