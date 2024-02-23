@@ -1,6 +1,6 @@
 import { MainLayout } from "@/components/layout"
 import AlignItemsList from "@/components/list"
-import { auth } from "@/services/firebase"
+import { auth } from "@/services/firebaseConfig"
 import { fetchDataProduct } from "@/services/utils"
 import { Box, Container, Grid } from "@mui/material"
 import { Editor } from "@tinymce/tinymce-react"

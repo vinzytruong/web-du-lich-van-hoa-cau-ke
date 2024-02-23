@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyledButton } from '@/components/styled-button';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '@/services/firebase';
+import { auth, db } from '@/services/firebaseConfig';
 import { logOut } from '@/services/utils';
 import { useRouter } from 'next/router';
 import TableProduct from '@/components/table/table-product';
@@ -57,15 +57,11 @@ export default function Admin() {
     //         () => {
     //             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
     //                 setUrl(downloadURL)
-
     //             });
-
     //         }
     //     );
-
-
-    //     console.log('String uploaded successfully as file');
     // }
+
     const sendData = async () => {
         data.map(async (item: any) => {
             try {
@@ -81,20 +77,12 @@ export default function Admin() {
                     isPopular: item.isPopular,
                     detail: item.detail
                 });
-                console.log("Document written with ID: ", docRef.id);
             } catch (e) {
                 console.error("Error adding document: ", e);
             }
         })
 
     }
-
-    const [url, setUrl] = useState<string>('');
-    const [progresspercent, setProgresspercent] = useState(0);
-
-    // const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     const { dataProduct, isLoadding } = useProduct()
     const { dataSites, isLoaddingSites } = useSites()

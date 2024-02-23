@@ -3,8 +3,11 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import { data as dataSites } from '@/data/tourist-attraction.data'
+// import { data as dataSites } from '@/data/tourist-attraction.data'
 import { data as dataProduct } from '@/data/ocop-product.data'
+import useSites from '@/hooks/useSites'
+import { Skeleton } from '@mui/material'
+import useProduct from '@/hooks/useProduct'
 
 interface Exp {
   label: string
@@ -14,23 +17,9 @@ interface ExpItemProps {
   item: Exp
 }
 
-const exps: Array<Exp> = [
-  {
-    label: 'Di tích lịch sử',
-    value: (dataSites.filter(item => item.category.includes('di-tich')).length - 1) + "+",
-  },
-  {
-    label: 'Địa điểm tham quan',
-    value: (dataSites.filter(item => item.category.includes('dia-diem-du-lich')).length - 1) + "+",
-  },
-  {
-    label: 'Sản phẩm OCOP',
-    value: (dataProduct.length - 1) + "+",
-  },
-]
+const ExpItem: FC<Exp> = ({ value, label }) => {
 
-const ExpItem: FC<ExpItemProps> = ({ item }) => {
-  const { value, label } = item
+
   return (
     <Box sx={{ textAlign: 'center', height: '160px' }} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
       <Box>
@@ -50,6 +39,14 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
 }
 
 const HomeHero: FC = () => {
+  const { dataSites, isLoaddingSites } = useSites()
+  const { dataProduct, isLoadding } = useProduct()
+  
+  const numHitoricalSites = dataSites.sites.filter(item => item.category.includes('di-tich')).length - 1
+  const numSiteSeeing = dataSites.sites.filter(item => item.category.includes('dia-diem-du-lich')).length - 1
+  const numProduct = dataProduct.products.length - 1
+
+
   return (
     <Box id="hero" sx={{
       backgroundColor: 'background.paper',
@@ -68,11 +65,64 @@ const HomeHero: FC = () => {
       <Container maxWidth="lg" sx={{ mt: '90vh', display: { xs: 'none', md: 'block' } }}>
         <Box sx={{ bgcolor: 'background.paper', boxShadow: 2, borderRadius: 4 }}>
           <Grid container spacing={2}>
-            {exps.map((item) => (
-              <Grid key={item.value} item xs={12} md={4}>
-                <ExpItem item={item} />
+            
+              <Grid item xs={12} md={4}>
+
+                <Box sx={{ textAlign: 'center', height: '160px' }} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                  <Box>
+                    <Typography
+                      sx={{ color: 'secondary.main', fontSize: { xs: 34, md: 44 }, fontWeight: 'bold' }}
+                    >
+                      {numHitoricalSites}+
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography color="text.secondary" variant="h5">
+                      Di tích lịch sử
+                    </Typography>
+                  </Box>
+                </Box>
+
               </Grid>
-            ))}
+
+              <Grid item xs={12} md={4}>
+
+                <Box sx={{ textAlign: 'center', height: '160px' }} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                  <Box>
+                    <Typography
+                      sx={{ color: 'secondary.main', fontSize: { xs: 34, md: 44 }, fontWeight: 'bold' }}
+                    >
+                      {numSiteSeeing}+
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography color="text.secondary" variant="h5">
+                      Địa điểm du lịch
+                    </Typography>
+                  </Box>
+                </Box>
+
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+
+                <Box sx={{ textAlign: 'center', height: '160px' }} display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+                  <Box>
+                    <Typography
+                      sx={{ color: 'secondary.main', fontSize: { xs: 34, md: 44 }, fontWeight: 'bold' }}
+                    >
+                      {numProduct}+
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography color="text.secondary" variant="h5">
+                      Sản phẩm OCOP
+                    </Typography>
+                  </Box>
+                </Box>
+
+              </Grid>
+           
           </Grid>
         </Box>
       </Container>

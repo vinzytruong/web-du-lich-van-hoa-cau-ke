@@ -1,20 +1,21 @@
 import { MainLayout } from "@/components/layout"
-import AlignItemsList from "@/components/list"
 import { StyledButton } from "@/components/styled-button"
 import useSites from "@/hooks/useSites"
-import { auth } from "@/services/firebase"
-import { fetchDataProduct } from "@/services/utils"
-import { Box, Container, Grid, OutlinedInput, Skeleton, Typography } from "@mui/material"
+import { auth } from "@/services/firebaseConfig"
+import { Box, Grid, OutlinedInput, Skeleton, Typography } from "@mui/material"
 import { Editor } from "@tinymce/tinymce-react"
 import { onAuthStateChanged } from "firebase/auth"
 import { useRouter } from "next/router"
-import { useEffect, useRef, useState } from "react"
-const text = '<p>Nhập nội dung</p>'
+import { useRef } from "react"
+
 const EditPage = (id: any) => {
-    const [value, setValue] = useState('<p>The quick brown fox jumps over the lazy dog</p>');
-    const [text, setText] = useState('');
-    const [textFromFirebase, setTextFromFirebase] = useState('');
+    const text = '<p>Nhập nội dung</p>'
     const router = useRouter()
+    const { dataSites, getSite, updateDocument, isLoaddingSites } = useSites()
+    const dataSiteById = getSite(id.id)
+    const textHtml = dataSiteById ? dataSiteById.detail : text
+    const editorRef = useRef<any>(null);
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
@@ -22,19 +23,13 @@ const EditPage = (id: any) => {
             router.push('/login')
         }
     });
-    const { dataSites, getSite, updateDocument, isLoaddingSites } = useSites()
-    const dataSiteById = getSite(id.id)
-    const textHtml = dataSiteById ? dataSiteById.detail : text
-
-    const editorRef = useRef<any>(null);
+    
     const log = () => {
         if (editorRef.current) {
             console.log(editorRef.current.getContent());
         }
     };
-    console.log("hik", getSite(id.id), id);
 
-    {/* <div dangerouslySetInnerHTML={{ __html: textHtml }} /> */ }
     return (
         <MainLayout>
             <Grid container minHeight='100vh' style={{ margin: 0, padding: 0 }} sx={{ m: 0, p: 0, background: '#fff' }}>

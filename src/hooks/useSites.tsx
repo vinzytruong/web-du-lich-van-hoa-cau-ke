@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hook';
-import { SAVE_PRODUCT, SAVE_PRODUCTS } from '@/store/product/action';
-import { Product } from '@/interfaces/product';
-import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import { db } from '@/services/firebase';
+import { collection, doc, getDocs, updateDoc} from 'firebase/firestore';
+import { db } from '@/services/firebaseConfig';
 import { SAVE_SITE } from '@/store/sites/action';
 import { Sites } from '@/interfaces/site';
 
@@ -17,8 +15,6 @@ export default function useSites() {
             try {
                 const querySnapshot = await getDocs(collection(db, "dia-diem"));
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
-
                     setSites({
                         id: doc.data().id,
                         idDoc: doc.id,
@@ -45,19 +41,6 @@ export default function useSites() {
     const setSites = (sitesData: Sites, id: number) => {
         dispatch(SAVE_SITE({ site: sitesData, id: id }))
     }
-    // const updateDocument = async (id: any, textHtml: any) => {
-
-    //     try {
-    //         //   const docRef = firestore.collection('your_collection').doc(data.id);
-    //         await updateDoc(doc(db, "dia-diem", id), {
-    //             detail: textHtml
-    //         });
-
-    //         console.log('Document updated successfully!');
-    //     } catch (error) {
-    //         console.error('Error updating document: ', error);
-    //     }
-    // };
 
     const updateDocument = async (id: any, textHtml: any) => {
         const examcollref = doc(db, 'dia-diem', id)

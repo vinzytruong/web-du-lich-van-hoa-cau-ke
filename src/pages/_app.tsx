@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import { MUIProvider } from '@/providers'
 import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import '@/styles/globals.css'
@@ -29,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const delay = setTimeout(() => {
       setAnimation(animationData);
       setLoading(false);
-    }, 1000); // Delay for 2 seconds before displaying content
+    }, 2000); 
 
     return () => clearTimeout(delay);
   }, [animationData]);
@@ -44,7 +43,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/images/logo-doan-tncs-hcm.png" />
       </Head>
       <Provider store={store}>
-        <MUIProvider>
           <ThemeCustomization>
             {loading ? (
               <Box sx={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -58,10 +56,7 @@ export default function App({ Component, pageProps }: AppProps) {
             ) : (
               <Component {...pageProps} />
             )}
-
-
           </ThemeCustomization>
-        </MUIProvider>
       </Provider>
     </>
   )

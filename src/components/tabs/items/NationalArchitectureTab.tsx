@@ -89,7 +89,8 @@ const NationalArchitectureTab: FC = () => {
                                         display: { xs: 'none', md: 'block' },
                                         paddingTop: 2
                                     }}
-                                >Fear not! Darkening the image behind the text will make the text much easier to see!
+                                >
+                                    {item.description}
                                 </Typography>
                             </div>
                         </Box>

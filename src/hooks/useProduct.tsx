@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hook';
-import { SAVE_PRODUCT, SAVE_PRODUCTS } from '@/store/product/action';
+import { SAVE_PRODUCT } from '@/store/product/action';
 import { Product } from '@/interfaces/product';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/services/firebase';
+import { db } from '@/services/firebaseConfig';
 
 export default function useProduct() {
     const dataProduct = useAppSelector((state) => state.product);
@@ -15,8 +15,6 @@ export default function useProduct() {
             try {
                 const querySnapshot = await getDocs(collection(db, "san-pham"));
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.data());
-
                     setProducts({
                         id: doc.data().id,
                         name: doc.data().name,

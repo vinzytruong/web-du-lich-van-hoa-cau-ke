@@ -8,8 +8,9 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme, styled } from '@mui/material/styles'
 import IconArrowBack from '@mui/icons-material/ArrowBack'
 import IconArrowForward from '@mui/icons-material/ArrowForward'
-import { data } from '@/data/tourist-attraction.data'
 import { PopularCardItem } from '../card'
+import useSites from '@/hooks/useSites'
+import { Skeleton } from '@mui/material'
 
 
 interface SliderArrowArrow {
@@ -76,7 +77,8 @@ const HomeOurMentors: FC = () => {
       <Box sx={{ height: 8, width: 30, backgroundColor: 'divider', display: 'inline-block', borderRadius: 4 }} />
     ),
   }
-  const dataShow = data.filter(item => item.isPopular === true)
+  const { dataSites, isLoaddingSites } = useSites()
+  const dataShow = dataSites.sites.filter(item => item.isPopular === true)
   return (
     <Box
       id="mentors"
@@ -99,11 +101,15 @@ const HomeOurMentors: FC = () => {
         <Typography variant="body1" textAlign='center'>
           Xin chào và chào mừng quý vị đến với huyện Cầu Kè - một điểm đến tuyệt vời cho những ai yêu thích khám phá và khám phá lịch sử và văn hóa của Việt Nam. Các bạn hãy cùng chúng tôi bắt đầu cuộc hành trình đầy thú vị qua những điểm đến đặc biệt dưới đây
         </Typography>
-
         <Slider {...sliderConfig}>
-          {dataShow.map((item) => (
-            <PopularCardItem key={String(item.id)} item={item} />
-          ))}
+          {
+            isLoaddingSites ?
+              <Skeleton height='400px' />
+              :
+              dataShow.map((item) => (
+                <PopularCardItem key={String(item.id)} item={item} />
+              ))
+          }
         </Slider>
       </Container>
     </Box>
